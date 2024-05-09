@@ -30,7 +30,10 @@ public class DNSResolver {
             socket.receive(responsePacket);
 
             // Imprimir la respuesta
-            System.out.println("Response from DNS server: " + new String(responsePacket.getData()));
+            System.out.println("\n\nReceived: " + responsePacket.getLength() + " bytes");
+            for (int i = 0; i < responsePacket.getLength(); i++) {
+                System.out.print(String.format("%s", responseData[i]) + " ");
+            }
 
             // Cerrar el socket
             socket.close();

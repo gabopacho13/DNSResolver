@@ -1,8 +1,9 @@
 package com.example;
 import java.io.*;
 import java.net.*;
+import java.sql.SQLException;
 
-public class DNSResolver {
+public class DNSResolverExternal {
     public static void main(String[] args){
         // Dirección del servidor DNS
         String dnsServerAddress = "10.2.1.10"; // Ejemplo: Servidor DNS de Google
@@ -36,6 +37,14 @@ public class DNSResolver {
             socket.close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+    private static void saveToDatabase(String domain, @org.jetbrains.annotations.NotNull InetAddress ipAddress) {
+        try {
+            ConnectorBase.insertRecord(domain, ipAddress.getHostAddress());
+            System.out.println("Record inserted successfully into the database.");
+        } catch (SQLException e) {
+            System.out.println("Error inserting record into the database: " + e.getMessage());
         }
     }
 }
